@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KNUT-BUG | Bienvenue</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@800&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --r: #ff0000;
+      --r-dark: #8a0000;
+      --r-glow: rgba(255, 0, 0, 0.5);
+      --w: #ffffff;
+      --w-glow: rgba(255, 255, 255, 0.3);
+      --bg: #050505;
+      --card: #0a0a0a;
+      --text: #ffffff;
+      --green: #00ff00;
+    }
+
+    * { 
+      margin: 0; padding: 0; box-sizing: border-box; 
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+    }
+
+    .bg-noise { 
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; 
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E"); 
+      opacity: 0.04; 
+    }
+    
+    .bg-aura {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.06) 0%, transparent 70%);
+    }
+
+    /* Conteneur principal centré */
+    .center-wrapper {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header { 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+    }
+
+    .avatar-container {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 3px solid var(--r);
+      padding: 5px;
+      box-shadow: 0 0 30px var(--r-glow);
+      overflow: hidden;
+      background: var(--card);
+      margin-bottom: 18px;
+    }
+    .avatar-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .logo { 
+      font-family: 'Syne', sans-serif; 
+      font-weight: 800; 
+      font-size: 26px;
+      letter-spacing: -1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .logo em { font-style: normal; color: var(--r); text-shadow: 0 0 15px var(--r); }
+
+    .btn-main {
+      display: flex; 
+      align-items: center; 
+      gap: 20px;
+      width: 100%; 
+      padding: 18px; 
+      border-radius: 14px;
+      text-decoration: none; 
+      transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+      background: var(--card);
+      color: var(--text);
+      border: 2px solid var(--r); 
+      box-shadow: 0 0 15px rgba(255, 0, 0, 0.15);
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-main:hover {
+      transform: translateY(-4px);
+      background: #000;
+      border-color: #ff4d4d;
+      box-shadow: 0 0 30px var(--r-glow), inset 0 0 15px rgba(255, 0, 0, 0.2);
+    }
+
+    .label-box { 
+      flex: 1; 
+      font-weight: 700; 
+      font-size: 13px; 
+      letter-spacing: 0.5px; 
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .label-box small { 
+      display: block; 
+      font-family: 'Space Mono', monospace; 
+      font-size: 7.5px; 
+      margin-top: 4px; 
+      letter-spacing: 0.5px;
+      font-weight: 700;
+    }
+
+    .icon-box { 
+      width: 40px; height: 40px; border-radius: 8px; 
+      display: flex; align-items: center; justify-content: center; 
+      background: rgba(255, 0, 0, 0.1); 
+      color: var(--r);
+      flex-shrink: 0; 
+      border: 1px solid var(--r);
+    }
+
+    .status-message {
+      text-align: center;
+      margin-bottom: 15px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* footer avec description */
+    .footer-dev {
+      position: fixed;
+      bottom: 20px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      z-index: 1;
+      padding: 10px 20px;
+    }
+    .footer-dev span { color: var(--r); font-weight: 700; }
+    
+    .description {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      letter-spacing: 0.8px;
+      text-transform: none;
+      color: rgba(255,255,255,0.55);
+      margin-top: 8px;
+      line-height: 1.5;
+    }
+    .description strong {
+      color: var(--r);
+      font-weight: 700;
+    }
+
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-1px, 0.5px); }
+      40% { transform: translate(1px, -0.5px); }
+      100% { transform: translate(0); }
+    }
+    .logo:hover em { display: inline-block; animation: glitch 0.2s infinite; }
+  </style>
+</head>
+<body>
+
+  <div class="bg-noise"></div>
+  <div class="bg-aura"></div>
+
+  <div class="center-wrapper">
+    <div class="header">
+      <div class="avatar-container">
+        <img src="1.jpg" alt="Avatar">
+      </div>
+      <div class="logo">KNUT<em>-</em>BUG</div>
+    </div>
+
+    <div class="status-message">// SYSTEM_STANDBY //</div>
+
+    <!-- Bouton unique : charge le lien http://fi1.bot-hosting.net:6147 -->
+    <div class="btn-main" id="startBtn">
+      <span class="icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+          <polygon points="5 3 19 12 5 21 5 3"/>
+        </svg>
+      </span>
+      <span class="label-box">
+        COMMENCER<small>INITIALISER_SESSION</small>
+      </span>
+      <span class="icon-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+
+  <div class="footer-dev">
+    <span>KNUT</span> & <span>RAIZEL</span>
+    <div class="description">
+      Site d'envoi de bug ultra puissant — compatible <strong>ANDROID</strong> & <strong>iOS</strong>
+    </div>
+  </div>
+
+  <audio id="knut-audio" loop preload="auto" style="display:none"><source src="/knut.mp3" type="audio/mpeg"></audio>
+  
+  <script>
+    const startBtn = document.getElementById('startBtn');
+    const targetUrl = 'http://fi1.bot-hosting.net:6147';
+
+    startBtn.addEventListener('click', () => {
+      startBtn.style.transform = 'scale(0.97)';
+      setTimeout(() => {
+        window.location.href = targetUrl;
+      }, 100);
+    });
+
+    (function() {
+      var audio = document.getElementById("knut-audio");
+      if (audio) {
+        var savedTime = parseFloat(localStorage.getItem("knut_audio_time") || "0");
+        audio.currentTime = savedTime;
+        function save() { localStorage.setItem("knut_audio_time", audio.currentTime); }
+        window.addEventListener("beforeunload", save);
+        setInterval(save, 1000);
+        document.addEventListener("click", function() { audio.play().catch(e=>{}); }, { once: true });
+      }
+    })();
+  </script>
+</body>
+</html>
